@@ -1,0 +1,25 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system utilities
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY backend/requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt email-validator
+
+COPY backend/ /app/backend/
+
+WORKDIR /app/backend
+ENV PYTHONPATH=/app/backend
+
+# Seed database and train ML model during build/startup
+RUN python seed_data.py
+RUN python -c "from ml.training import run_full_training_pipeline; run_full_training_pipeline()"
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

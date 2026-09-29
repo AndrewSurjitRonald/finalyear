@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: cofound_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./cofound.db
+      - JWT_SECRET=super-secret-cofound-ai-jwt-key-2026-production-ready
+      - CORS_ORIGINS=["http://localhost:5173","http://localhost:3000","*"]
+    volumes:
+      - ./backend/ml_artifacts:/app/backend/ml_artifacts
+      - ./backend/cofound.db:/app/backend/cofound.db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: cofound_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

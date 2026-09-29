@@ -1,0 +1,145 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* ---------------------------------------------------------------------- */
+/* Design tokens — one set of names, two value sets (light / dark).       */
+/* Everything in the app should reference these via the Tailwind classes  */
+/* bg-page / bg-surface / bg-surface2 / bg-surface3 / border-edge /       */
+/* border-edge2 / text-fg / text-muted / text-subtle, rather than raw     */
+/* slate-* or hardcoded hex values.                                      */
+/* ---------------------------------------------------------------------- */
+:root {
+  --page: 248 250 252;       /* slate-50   */
+  --surface: 255 255 255;    /* white      */
+  --surface-2: 248 250 252;  /* slate-50   */
+  --surface-3: 241 245 249;  /* slate-100  */
+  --edge: 226 232 240;       /* slate-200  */
+  --edge-2: 203 213 225;     /* slate-300  */
+  --fg: 15 23 42;            /* slate-900  */
+  --muted: 71 85 105;        /* slate-600  */
+  --subtle: 100 116 139;     /* slate-500  */
+
+  color-scheme: light;
+}
+
+:root.dark {
+  --page: 8 10 16;           /* near-black  */
+  --surface: 15 19 30;       /* #0f131e     */
+  --surface-2: 17 23 38;     /* #111726     */
+  --surface-3: 30 41 59;     /* slate-800   */
+  --edge: 30 41 59;          /* slate-800   */
+  --edge-2: 51 65 85;        /* slate-700   */
+  --fg: 248 250 252;         /* slate-50    */
+  --muted: 148 163 184;      /* slate-400   */
+  --subtle: 100 116 139;     /* slate-500   */
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-page text-fg font-sans transition-colors duration-200;
+  }
+  ::selection {
+    @apply bg-brand-500/30 text-brand-700 dark:text-brand-200;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-page;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-edge2 rounded;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-subtle;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Shared component classes — defined once, used everywhere. Keeping the  */
+/* accent (status / score) colors here means every page gets consistent,  */
+/* theme-correct contrast without repeating dark: variants inline.        */
+/* ---------------------------------------------------------------------- */
+@layer components {
+  /* Flat, hairline-bordered surfaces — no colored glow shadows, no blobby
+     radii. Elevation comes from contrast and spacing, not drop shadow. */
+  .card {
+    @apply bg-surface border border-edge rounded-xl;
+  }
+  .card-hover {
+    @apply hover:border-edge2 transition-colors duration-200;
+  }
+  .panel {
+    @apply bg-surface2 border border-edge rounded-lg;
+  }
+  .divider {
+    @apply border-edge;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 hover:bg-brand-700 text-white;
+  }
+  .btn-secondary {
+    @apply btn bg-surface3 hover:bg-edge text-fg border border-edge;
+  }
+  .btn-ghost {
+    @apply btn text-muted hover:text-fg hover:bg-surface3;
+  }
+  .btn-success {
+    @apply btn bg-emerald-600 hover:bg-emerald-700 text-white;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold border;
+  }
+  .badge-success {
+    @apply badge bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30;
+  }
+  .badge-warning {
+    @apply badge bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30;
+  }
+  .badge-danger {
+    @apply badge bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/30;
+  }
+  .badge-info {
+    @apply badge bg-brand-500/10 text-brand-700 dark:text-brand-400 border-brand-500/30;
+  }
+  .badge-neutral {
+    @apply badge bg-surface3 text-muted border-edge;
+  }
+
+  .text-accent-indigo { @apply text-brand-700 dark:text-brand-400; }
+  .text-accent-purple { @apply text-purple-700 dark:text-purple-400; }
+  .text-accent-pink { @apply text-pink-700 dark:text-pink-400; }
+  .text-accent-emerald { @apply text-emerald-700 dark:text-emerald-400; }
+  .text-accent-rose { @apply text-rose-700 dark:text-rose-400; }
+  .text-accent-amber { @apply text-amber-700 dark:text-amber-400; }
+  .text-accent-blue { @apply text-blue-700 dark:text-blue-400; }
+
+  .input {
+    @apply w-full px-3.5 py-2.5 rounded-lg bg-surface2 border border-edge text-fg placeholder:text-subtle focus:outline-none focus:ring-1 focus:ring-brand-500/50 focus:border-brand-500 transition;
+  }
+
+  .stat-tile {
+    @apply p-4 rounded-lg bg-surface2 border border-edge;
+  }
+
+  /* Small uppercase monospace label — used for section eyebrows, data
+     labels, and anywhere the "research console" register should read
+     through (as opposed to marketing copy). */
+  .label-mono {
+    @apply font-mono text-[10px] font-medium tracking-[0.12em] uppercase text-subtle;
+  }
+}

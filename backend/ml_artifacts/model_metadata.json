@@ -1,0 +1,195 @@
+{
+  "model_name": "CoFound_MultiDimensional_Compatibility_Model",
+  "version": "v1.2.0",
+  "algorithm": "gradient_boosting",
+  "trained_at": "2026-09-20T00:09:45.534746",
+  "dataset_samples": 3000,
+  "features_count": 17,
+  "features_list": [
+    "tech_jaccard_sim",
+    "tech_complementarity",
+    "tech_required_coverage",
+    "tech_proficiency_avg",
+    "big5_cosine_sim",
+    "extraversion_synergy",
+    "agreeableness_min",
+    "emotional_stability_min",
+    "conscientiousness_alignment",
+    "workstyle_structure_diff",
+    "workstyle_collab_alignment",
+    "workstyle_pace_diff",
+    "comm_directness_diff",
+    "comm_async_alignment",
+    "comm_frequency_alignment",
+    "leadership_complementarity",
+    "interest_overlap"
+  ],
+  "test_metrics": {
+    "mae": 1.4573,
+    "rmse": 1.8191,
+    "r2_score": 0.7929
+  },
+  "baseline_comparison": [
+    {
+      "model_name": "Baseline (Skills Only)",
+      "description": "Compatibility evaluated strictly through technical skill overlap and proficiency",
+      "mae": 3.1752,
+      "rmse": 3.9382,
+      "r2_score": 0.0292
+    },
+    {
+      "model_name": "CoFound AI (Full Model)",
+      "description": "Multi-dimensional framework (Technical + Big Five + Work Style + Communication + Leadership + Interests)",
+      "mae": 1.4573,
+      "rmse": 1.8191,
+      "r2_score": 0.7929
+    }
+  ],
+  "ablation_study": [
+    {
+      "stage_name": "Model A (Skills Only)",
+      "feature_subset": "Technical Skills",
+      "features_count": 4,
+      "mae": 3.1795,
+      "rmse": 3.9698,
+      "r2_score": 0.0136
+    },
+    {
+      "stage_name": "Model B (+ Personality)",
+      "feature_subset": "Skills + Big Five",
+      "features_count": 9,
+      "mae": 2.6201,
+      "rmse": 3.2855,
+      "r2_score": 0.3243
+    },
+    {
+      "stage_name": "Model C (+ Work Style)",
+      "feature_subset": "Skills + Big 5 + Work Style",
+      "features_count": 12,
+      "mae": 1.9558,
+      "rmse": 2.4989,
+      "r2_score": 0.6091
+    },
+    {
+      "stage_name": "Model D (+ Communication)",
+      "feature_subset": "Skills + Big 5 + Work Style + Communication",
+      "features_count": 15,
+      "mae": 1.7606,
+      "rmse": 2.2809,
+      "r2_score": 0.6743
+    },
+    {
+      "stage_name": "Model E (Full CoFound AI Model)",
+      "feature_subset": "Full Multi-dimensional Feature Set",
+      "features_count": 17,
+      "mae": 1.5379,
+      "rmse": 1.916,
+      "r2_score": 0.7702
+    }
+  ],
+  "global_feature_importance": [
+    {
+      "feature_name": "workstyle_structure_diff",
+      "feature_label": "Structure Preference Delta",
+      "importance_score": 1.1534,
+      "category": "Work Style"
+    },
+    {
+      "feature_name": "workstyle_collab_alignment",
+      "feature_label": "Collaboration Synergy",
+      "importance_score": 1.0454,
+      "category": "Work Style"
+    },
+    {
+      "feature_name": "agreeableness_min",
+      "feature_label": "Baseline Agreeableness",
+      "importance_score": 1.0148,
+      "category": "Personality"
+    },
+    {
+      "feature_name": "comm_directness_diff",
+      "feature_label": "Communication Directness Gap",
+      "importance_score": 0.7964,
+      "category": "Communication"
+    },
+    {
+      "feature_name": "workstyle_pace_diff",
+      "feature_label": "Velocity / Pace Gap",
+      "importance_score": 0.7062,
+      "category": "Work Style"
+    },
+    {
+      "feature_name": "interest_overlap",
+      "feature_label": "Shared Domain Interests",
+      "importance_score": 0.6744,
+      "category": "Interests"
+    },
+    {
+      "feature_name": "comm_async_alignment",
+      "feature_label": "Async / Sync Preference",
+      "importance_score": 0.6694,
+      "category": "Communication"
+    },
+    {
+      "feature_name": "emotional_stability_min",
+      "feature_label": "Stress Resilience",
+      "importance_score": 0.4742,
+      "category": "Personality"
+    },
+    {
+      "feature_name": "big5_cosine_sim",
+      "feature_label": "Personality Cosine Similarity",
+      "importance_score": 0.461,
+      "category": "Personality"
+    },
+    {
+      "feature_name": "comm_frequency_alignment",
+      "feature_label": "Update Frequency Harmony",
+      "importance_score": 0.4108,
+      "category": "Communication"
+    },
+    {
+      "feature_name": "conscientiousness_alignment",
+      "feature_label": "Quality & Rigor Alignment",
+      "importance_score": 0.3732,
+      "category": "Personality"
+    },
+    {
+      "feature_name": "leadership_complementarity",
+      "feature_label": "Leadership Balance",
+      "importance_score": 0.373,
+      "category": "Leadership"
+    },
+    {
+      "feature_name": "tech_jaccard_sim",
+      "feature_label": "Skill Overlap (Jaccard)",
+      "importance_score": 0.2923,
+      "category": "Technical"
+    },
+    {
+      "feature_name": "tech_complementarity",
+      "feature_label": "Skill Complementarity",
+      "importance_score": 0.2097,
+      "category": "Technical"
+    },
+    {
+      "feature_name": "extraversion_synergy",
+      "feature_label": "Extraversion Synergy",
+      "importance_score": 0.1028,
+      "category": "Personality"
+    },
+    {
+      "feature_name": "tech_proficiency_avg",
+      "feature_label": "Average Skill Proficiency",
+      "importance_score": 0.05,
+      "category": "Technical"
+    },
+    {
+      "feature_name": "tech_required_coverage",
+      "feature_label": "Required Skill Coverage",
+      "importance_score": 0.0,
+      "category": "Technical"
+    }
+  ],
+  "synthetic_users_count": 100
+}
